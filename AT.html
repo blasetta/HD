@@ -1,0 +1,467 @@
+<script type="text/ng-template" id="AT_header.html">
+<header class="clearfix">
+<a href="#/" data-toggle-min-nav="" class="toggle-min" data-ng-show="r.Up.viewmenu"><i class="fa fa-bars"></i></a>
+
+<!-- Logo -->
+<div class="logo">
+    <a href="#/">
+        <span  ng-bind="r.HpO.APP_DESCR"></span>
+    </a>
+</div>
+    <div class="menu-button" toggle-off-canvas="">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </div>
+
+<div class="top-nav">
+<ul class="nav-left list-unstyled">
+
+    <li class="dropdown" >
+        <a href="javascript:;" class="dropdown-toggle" data-ng-hide="r.Up.stack.length===0" data-toggle="dropdown">
+            <i class="fa fa-bell-o nav-icon"></i>
+            <span class="badge badge-warning" data-ng-bind="r.Up.stack.length" ></span>
+        </a>
+        <div class="dropdown-menu with-arrow panel panel-default">
+            <div class="panel-heading" data-ng-click="alert(r.Up.getI18n('notif'))" data-ng-bind="r.HpO.i18n.notif"></div>
+            <ul class="list-group">
+                  <li class="list-group-item" ng-repeat="msg in r.Up.stack">
+                      <a href="javascript:;" class="media">
+                        <span class="pull-left media-icon"><!--bg-info bg-danger-->
+                                    <span class="round-icon sm" data-ng-class="(msg.t==0) ? 'bg-info' : (msg.t>3) ? 'bg-danger' : 'bg-success'"><i class="fa fa-bell-o"></i></span>
+                         </span>
+                          <div class="media-body">
+                              <span class="block" data-ng-bind="msg.m"></span>
+                              <span class="text-muted block" data-ng-bind="msg.d"></span>
+                          </div>
+
+                      </a>
+                  </li>
+            </ul>
+        </div>
+    </li>
+</ul>
+
+    <button class="btn" data-ng-if="r.Up.viewmenu" data-ng-class="{'btn-warning': !r.Up.Tabmode, 'btn-danger': r.Up.Tabmode}" ng-click="r.Up.Tabmode = ! r.Up.Tabmode">{{ (r.Up.Tabmode) ? 'Disattiva Tab' : 'Attiva Tab' }}</button>
+    <ul class="nav-right pull-right list-unstyled">
+    <li data-ng-if="r.HpO.SEC_USERID==='anonym'"  ><a  href="#/nmb/login" class="nav-right pull-right">Login</a></li>
+    <li data-ng-if="r.HpO.SEC_USERID!=='anonym'"  class="dropdown text-normal nav-profile f12">
+        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="glyphicon glyphicon-user img-circle img30_30"></i>
+                        <span data-ng-bind="r.HpO.NAME+' '+r.HpO.SURNAME"></span>
+                    </span>
+        </a>
+        <ul class="dropdown-menu with-arrow pull-right">
+            <li>
+                <a href="#/page/VV_UPROFILE_CPG">
+                    <i class="fa fa-user"></i>
+                    <span data-i18n="My Profile"></span>
+                </a>
+            </li>
+            <!--li>  href="#/nmb/profile" vecchio profilo
+                <a href="#/tasks">
+                    <i class="fa fa-check"></i>
+                    <span data-i18n="My Tasks"></span>
+                </a>
+            </li-->
+            <li>
+                <a href="#/nmb/lock-screen">
+                    <i class="fa fa-lock"></i>
+                    <span data-i18n="Lock"></span>
+                </a>
+            </li>
+            <li>
+                <a href="#/nmb/signin">
+                    <i class="fa fa-check"></i>
+                    <span data-i18n="Change User"></span>
+                </a>
+            </li>
+            <li>
+                <a ng-click="r.Up.logout()"> 
+                    <i class="fa fa-sign-out"></i>
+                    <span data-i18n="Log Out"></span>
+                </a>
+            </li>
+		</ul>
+    </li>
+
+</ul>
+</div>
+
+</header>
+</script>
+
+<!-- Primo esempio di Client Component Container-->
+<script type="text/ng-template" id="AT_ASLMap">
+    <div class="row">
+        <div class="col-md-6"> 
+            <rx-ccomp xtype="googlemap" xcode="ASLMAP" data-mapcenter="41.911538,12.475984" data-mapzoom="6" mapid="ASL" mapheight="100%" mapfunc="loadASL"></rx-ccomp> 
+        </div>
+        <div ng-repeat="ccomp in k" class="col-md-6">
+            <rx-ccomp xtype="report" xcode="{{ccomp}}" ></rx-ccomp>
+        </div>
+    </div>
+</script>
+
+<!-- Da cancellare cose di Videat Lista Esami -->
+<script type="text/ng-template" id="VListaEsami">
+<div name="mainview" data-ng-if="VVs.mainview"> 
+	<div  data-ng-if="store.d.CREDITI[0].CFREE>0"  class="callout callout-success">
+                <h4>Nota Importante</h4>
+                <p>Hai <span ng-bind="store.d.CREDITI[0].CFREE" /> esame di prova gratuito. Puoi testare il Sistema caricando gratuitamente un esame, che resterà disponibile per 12 ore durante le quali potrai condividerlo con un destinatario.</p>
+   </div>
+   	<div  data-ng-if="store.d.CREDITI[0].CFULL>0"  class="callout callout-success">
+                <h4>Crediti Full</h4>
+                <p>Hai <span ng-bind="store.d.CREDITI[0].CFULL" /> esame/i acquistati. </p> 
+   </div>
+ 
+  <!-- Acquista V.payP() data-ng-click="VVs.V.payP()" --> 
+    <div data-ng-show="store.d.CREDITI[0].CFREE>-1"  class="panel-body">
+        <a class="btn btn-primary" ng-show="(store.d.CREDITI[0].CFREE +store.d.CREDITI[0].CFULL)>0"  href="V/Upload.html" target="_blank">Carica un nuovo esame</a>
+        <button class="btn btn-warning" data-ng-click="V.InviaEsame()" >Spedisci</button>
+        <button class="btn btn-danger"  ng-show="selList.length>0" data-ng-click="V.testme()">Elimina</button>
+        <button class="btn btn-info"  ng-show="selList.length>0" data-ng-click="Up.Msg(4444)">Scarica</button>
+        <button class="btn btn-success" data-ng-click="VVs.V.ViewShow('PRICE')">Acquista</button> 
+        <!--button class="btn btn-warning" data-ng-click="VVs.V.testme(); exnotify('questo è il mio messaggio',0)">Messaggio</button-->
+    </div>  
+          
+    
+<div class="row">
+         <div class="col-md-12">
+            <rx-ccomp xtype="report" xcode="ESAMI" ></rx-ccomp>
+        </div>
+</div>
+</div> <!-- Fine MainView-->
+<span ng-if="VVs.views.PRICE.isvisible"><rx-ccomp xtype="view" xcode="PRICE" ></rx-ccomp></span> 
+<span ng-if="VVs.views.SENDES.isvisible"><rx-ccomp xtype="view" xcode="SENDES" ></rx-ccomp></span>
+</script>
+
+<!-- Price Table -->
+<script type="text/ng-template" id="VPriceTables">
+<div class="page" data-ng-if="VVs.views['PRICE'].isvisible">
+
+    <div class="divider divider-lg"></div>
+    <div class="row">
+        <div class="col-md-3 col-xsm-6">
+            <section class="pricing-table pricing-table-success">
+                <header>Gratis</header>
+                <div class="pricing-body">
+                    <div class="pricing-price">
+                        <strong>€ 0,00</strong>
+                    </div>
+                    <ul>
+                        <li><strong>Nessun</strong> Supporto</li>
+                        <li><strong>1</strong> Upload di prova</li>
+                        <li><strong>1</strong> Condivisione</li>
+                        <li><strong>12 ore</strong> Disponibilità online</li>
+                    </ul>                            
+                </div>
+                <footer>
+					<a data-ng-click="VVs.V.ViewHide('PRICE')" class="btn btn-primary">Ritorna</a>
+                </footer>
+            </section>
+        </div>
+
+        <div class="col-md-3 col-xsm-6">
+            <section class="pricing-table pricing-table-info">
+                <header>Basic</header>
+                <div class="pricing-body">
+                    <div class="pricing-price">
+                        <strong>€ 3,00</strong>
+                    </div>
+                    <ul>
+                        <li>Supporto online</li>
+                        <li><strong>1</strong> Upload completo</li>
+                        <li><strong>Nessun limite a</strong> Condivisioni</li>
+                        <li><strong>30 giorni</strong> di Disponibilità online</li>
+                    </ul>                            
+                </div>
+                <footer>
+                    <a data-ng-click="V.payP(1)" class="btn btn-info">Acquista ora</a>
+					<a data-ng-click="VVs.V.ViewHide('PRICE')" class="btn btn-primary">Ritorna</a>
+                </footer>
+            </section>
+        </div>
+
+        <div class="col-md-3 col-xsm-6">
+            <section class="pricing-table pricing-table-warning">
+                <header>STANDARD</header>
+                <div class="pricing-body">
+                    <div class="pricing-price">
+                        <strong>€ 6,00</strong>
+                    </div>
+                    <ul>
+                        <li>Supporto online</li>
+                        <li><strong>3</strong> Upload completi</li>
+                        <li><strong>Nessun limite a</strong> Condivisioni</li>
+                        <li><strong>30 giorni</strong> di Disponibilità online</li>
+                    </ul>                            
+                </div>
+                <footer>
+                    <a data-ng-click="V.payP(2)" class="btn btn-warning">Acquista ora</a>
+					<a data-ng-click="VVs.V.ViewHide('PRICE')" class="btn btn-primary">Ritorna</a>
+                </footer>
+            </section>
+        </div>
+
+        <div class="col-md-3 col-xsm-6">
+            <section class="pricing-table pricing-table-danger">
+                <header>ULTIMATE</header>
+                <div class="pricing-body">
+                    <div class="pricing-price">
+                        <strong>€ 9,00</strong>
+                    </div>
+                    <ul> 
+                        <li>Supporto online</li>
+                        <li><strong>5</strong> Upload completi</li>
+                        <li><strong>Nessun limite a</strong> Condivisioni</li> 
+                        <li><strong>30 giorni</strong> di Disponibilità online</li>
+                    </ul>                            
+                </div>
+                <footer>
+                    <a data-ng-click="V.payP(3)" class="btn btn-danger">Acquista ora</a>
+					<a data-ng-click="VVs.V.ViewHide('PRICE')" class="btn btn-primary">Ritorna</a>
+                </footer>
+            </section>
+        </div>
+    </div>
+
+    <div class="divider divider-lg">Test: Carta di credito da Utilizzare cc 4020027481912997 scadenza 7/2019 CVV: 111</div> 
+ 
+</div>
+</script>
+
+<!-- Price Table -->
+<script type="text/ng-template" id="SendEsame">
+<div class="page">
+    <div class="row">
+        <div class="col-sm-3">
+            <section class="panel panel-default mail-categories">
+                <div class="panel-heading">
+                    <a href="#/mail/compose" class="btn btn-block btn-lg btn-primary">INVIO Esami</a>
+                </div>
+				<div class="panel-body">
+Attenzione: l’utente è consapevole di comunicare al destinatario, il cui indirizzo email è fornito al sistema Videat dall’utente stesso che ne garantisce l’esattezza e la legittimità d’uso, i propri dati sanitari e idonei a rivelare lo stato di salute. 
+                </div>
+<div class="panel-heading">Accetto</div>				
+ <div class="panel-body"> 
+Videat non deve essere utilizzato a scopo diagnostico o di refertazione. 
+L'utilizzo di Videat non sostituisce in alcun modo la visita medica.
+				</div>
+			</section>
+
+            
+        </div>
+        <div class="col-sm-9">
+            <section class="panel panel-default mail-container mail-compose">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Spedizione Esami</strong></div>
+                <div class="panel-body">
+				<ul><li ng-repeat="es in store.RowsSel"><b>{{es.nomePaziente}}</b> {{es.descrizione}}</li></ul> 
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="mail_to" class="col-xs-2">To:</label>
+                            <div class="col-xs-10">
+                                
+<input type="hidden" ui-select2="{ allowClear: true, width:'100%', multiple: true, simple_tags: true,  tags: spediz.lista  }" class="form-control" data-placeholder="destinatari" ng-required="false"
+            ng-model="spediz.to"  >
+        <!--option></option>
+        <option ng-repeat='rec in store.d.V_MYDEST' value="{{rec.userId}}" >{{rec.n}}</option-->
+</input>
+                            </div>
+                        </div>
+                        <!--div class="form-group">
+                            <label for="mail_cc" class="col-xs-2">CC:</label>
+                            <div class="col-xs-10">
+                                <input type="text" id="mail_cc" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mail_bcc" class="col-xs-2">BCC:</label>
+                            <div class="col-xs-10">
+                                <input type="text" id="mail_bcc" class="form-control">
+                            </div>
+                        </div-->
+                        <div class="form-group">
+                            <label for="mail_subject" class="col-xs-2">Oggetto:</label>
+                            <div class="col-xs-10">
+                                <input type="text" id="mail_subject" class="form-control">
+                            </div>
+                        </div>
+                        <div text-angular ng-model="spediz.textemail" class="ui-editor"></div>
+                    </form>
+                    <div class="mail-actions">
+                        <div class="btn btn-sm btn-primary"  data-ng-click="V.inviamail()" >Invia</div>
+                        <div data-ng-click="VVs.V.ViewHide('SENDES')" class="btn btn-sm btn-default">Ritorna</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+</script>
+
+<script type="text/ng-template" id="AT_EDPROFILE">
+       <section class="panel panel-default">
+          <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Edit Profile</strong></div>
+          <div class="panel-body">
+		  <rx-ccomp xtype="report" xcode="V_edUT" xt="FL_editONE" ></rx-ccomp>
+                  <button class="btn btn-success" data-ng-click="V.PinHpO(rec)">Aggiorna</button>
+                  <button class="btn btn-default" data-ng-click="VVs.V.ViewHide('UEDIT')">Annulla</button>			  
+          </div>
+      </section>
+ </script>
+ 
+<!-- Pagina del Profilo  -->
+<script type="text/ng-template" id="AT_UPROFILE">
+<div class="page page-profile">
+    <div class="row">
+        <div class="col-md-6">
+		<!-- Editazione viene reso visibile su comando View EDIT  -->
+        <span ng-if="VVs.views.UEDIT.isvisible"><rx-ccomp xtype="view" xcode="UEDIT" ></rx-ccomp>		
+		</span>
+		
+		<!-- Vista dati utenti visibile per default  -->
+            <div ng-if="!VVs.views.UEDIT.isvisible"  class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Profile Info</strong>
+				<a data-ng-click="VVs.V.ViewShow('UEDIT')" class="btn btn-success btn-xs edit"><i class="fa fa-pencil"> </i>  Modifica Profilo</a>
+				</div>
+                <div class="panel-body">
+                    <div class="media">
+                        <div class="media-body">
+                            <ul class="list-unstyled list-info">
+                                <li>
+                                    <span class="icon glyphicon glyphicon-user"></span>
+                                    <label>User name</label>
+                                    {{r.HpO.NAME}} {{r.HpO.SURNAME}}
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-envelope"></span>
+                                    <label>Email</label>{{r.HpO.SEC_EMAIL}}
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-road"></span>
+                                    <label>Address</label> {{r.HpO.INDIRIZZO}} 
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-home"></span>
+                                    <label>City</label> {{r.HpO.CAP}} {{r.HpO.CITTA}} {{r.HpO.PROV}}
+                                </li>
+                               <li>
+                                    <span class="icon glyphicon glyphicon-earphone"></span>
+                                    <label>Contact</label>
+                                    {{r.HpO.PHONE}}
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-flag"></span>
+                                    <label>Nationality</label>
+                                    Italy - {{r.HpO.SEC_USERID}}
+                                </li>
+                            </ul>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+        <div class="col-md-6">
+
+            <div class="panel panel-default">
+            	<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>  Attività</strong></div>
+				    <div class="panel-body">
+                <ul class="list-group">
+                    <li ng-repeat="acqui in store.d.UACQUI"  class="list-group-item"> 
+                        <span class="badge" ng-class="r.Up.typestyle($index,'badge-')">{{acqui.MV_qty}}</span>
+                        {{acqui.MV_date | toDate | date : 'dd/MM/yyyy' }} <b>{{acqui.MV_descr}}</b>
+                    </li>
+                </ul>
+            </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</script>                
+
+<!-- data-ng-app="Vapp" data-ng-controller="VUploadController"  -->
+<script type="text/ng-template" id="AT_MainUpload.html">
+<form id="fileupload" method="POST" enctype="multipart/form-data" data-ng-controller="VUploadController"  data-file-upload="options"   data-ng-class="{'fileupload-processing': processing() || loadingFiles}">
+                    <div style="width:90%;margin: auto;"> 
+                    <div id="alertinfo_ext" ng-show="Up.message!='' || Up.status==1" class="alert alert-info alert-dismissable">
+					<div id="alertinfo"     ng-show="Up.message!=''" ng-bind-html="Up.message" ></div>
+					<div id="alertinfo_byte"   ng-show="Up.status==1"> {{VBar.message}} </div>
+					
+					
+											<div ng-if="Up.status>0">
+						
+						 <div ng-show="Up.status==-5">
+                                <small><em>Fase 1</em></small>
+                                <progressbar class="progress-striped palto" value="VBar2.value">
+                                    <i style="display:inline-block; vertical-align:middle">{{VBar2.value}}%</i></progressbar>
+                            </div>
+						<br/>
+						<div ng-show="Up.status==1">
+                                <!-- small><em>Fase 2</em></small -->
+                                <progressbar class="progress-striped active palto" value="VBar.value" type="{{VBar.type}}">
+                                    <i style="display:inline-block; vertical-align:middle">{{VBar.value}}%</i></progressbar>
+                        </div>
+						</div>
+					
+					</div>
+                        <div ng-show="Up.riconosci">
+                            <small><em>Analisi files in corso. Attendere... {{Up.ricovalue}}%</em></small>
+                            <div style="height:10px; background-color:red; color:white;padding-bottom:10px;" ng-style="Up.ricostyle" ></div>
+                            <!--progressbar class="progress-striped" type="success" value="Up.ricovalue" type="{{Up.ricotype}}">
+                                <i style="display:inline-block; vertical-align:middle">{{Up.ricovalue}}% {{Up.ricotext}}</i></progressbar-->
+                        </div>
+						
+
+						
+						<br/><br/>
+                        <!-- h3>Videat Upload</h3 -->
+                        <div class="row fileupload-buttonbar">
+                            <div class="col-lg-7">
+                                <!-- The fileinput-button span is used to style the file input field as button  console.log(this.files.length)  onchange="barloadfile()" ng-change="Up.barloadfile()" -->
+                    <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}" ng-show="Up.status==0">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>Seleziona Esame</span>
+                        <input type="file" name="files[]" multiple directory webkitdirectory mozdirectory ng-disabled="disabled" onchange="barloadfile()" >
+                        </span>
+
+                    <button type="button" class="btn btn-warning cancel" data-ng-click="cancel()" ng-show="Up.status==1">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>Annulla upload</span>
+                    </button>
+					<button ng-show="Up.status==2" class="btn btn-large btn-warning" onclick="document.location.href='/esame.action?task=selectDestinatari&resetSession=true'">Spedisci</button>		
+		&nbsp;&nbsp;&nbsp;        
+		<button ng-show="Up.status!=1" class="btn btn-large btn-primary" onclick="document.location.href='/esame.action?task=esamiSpediti&amp;ricordaSelezione=true'">Lista Esami</button>
+		
+        
+
+
+                            </div>
+                        </div>
+                        
+                    </div>
+                </form>
+				
+				<div ng-show="Up.status==0" style="width: 90%;  margin: auto;">
+				<div ng-click="showDetails = ! showDetails" style="font-weight: bold; cursor: pointer; color: #428bca;" >Informazioni Utili
+				<ul ng-show="showDetails">
+					<br/>
+					<li>Il CD deve essere già inserito.
+					<li>Se l'esame è su CD dovrai solo selezionare l'unità ottica (CD/DVD).</li>					
+					<li>Se l'esame è su disco fisso dovrai selezionare la cartella che contiene l'esame.</li>				
+			
+					<li>Se inserendo il CD si apre la finestra di "Autoplay" è sufficiente chiuderla.</li>					
+				</ul>
+				
+				 
+				
+				</div>
+				<!-- div style="font-weight: bold; cursor: pointer; color: darkgray;">Tempi Medi di Upload</div -->
+				
+			</div> <!-- parte finale visibile inizio -->
+            </div>
+</script> 
+

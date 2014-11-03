@@ -1,0 +1,78 @@
+<div class="page page-dashboard">
+    <!-- stats -->
+    <div class="row">
+        <div class="col-lg-3 col-xsm-6">
+            <div class="panel mini-box">
+                <span class="box-icon bg-success">
+                    <i class="fa fa-medkit"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">639.387 <span class="size-h4"></span></p>
+                    <p class="text-muted">Medical Devices</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xsm-6">
+            <div class="panel mini-box">
+                <span class="box-icon bg-info">
+                    <i class="fa fa-stethoscope"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">9.926</p>
+                    <p class="text-muted">Pharma Products</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xsm-6">
+            <div class="panel mini-box">
+                <span class="box-icon bg-warning">
+                    <i class="fa fa-ambulance"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">14.678</p>
+                    <p class="text-muted">Sanitary Entities</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xsm-6">
+            <div class="panel mini-box">
+                <span class="box-icon bg-danger">
+                    <i class="fa fa-user-md"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">1.274</p>
+                    <p class="text-muted">Bids</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- end stats -->
+
+    <div class="row">
+
+           <div class="col-md-12">
+            <section class="panel panel-default">
+			<div class="row sqa sqa-cherry">Spesa Medical Device Regioni: Spesa in Mio€, Milioni di Abitanti, Spesa proCapite €</div>
+                <!--div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Spesa Medical Device Regioni: Spesa in Mio€, Milioni di Abitanti, Spesa proCapite €</strong></div-->
+                <div class="panel-body" data-ng-controller="DashCtrl">
+                    <div morris-chart
+                         data-data="comboData"
+                         data-type="bar"
+                         data-xkey="Regione"
+                         data-ykeys='["spesa", "pop", "spc"]'
+                         data-labels='["Spesa MD", "Popolazione", "Spesa PC"]'
+                         data-bar-colors='["#176799","#42A4BB","crimson"]'
+						 gridTextSize='10'
+                        style="height: 300px;" 
+                         ></div>
+                </div>
+            </section> 
+
+			
+        </div>
+       
+    </div>
+
+</div>
+  

@@ -1,0 +1,72 @@
+<!doctype html>
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!--link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"-->
+        <!-- needs images, font... therefore can not be part of ui.css -->
+        <link rel="stylesheet" href="../TFLAT/bower_components/font-awesome/css/font-awesome.min.css">
+        <!--link rel="stylesheet" href="../TFLAT/bower_components/weather-icons/css/weather-icons.min.css"-->
+        <!-- end needs images --> 
+
+            <link rel="stylesheet" href="../TFLAT/styles/main.css">
+            <link rel="stylesheet" href="../NGX/a/select2.css"> 
+            <link rel="stylesheet" href="../NGX/css/ng.css">
+ 			
+        <link rel="shortcut icon" href="../NGX/a/favicon.png">
+		<style>body {font-size: 13px;} .f12 {font-size: 12px; width:100%;}</style>
+    </head>
+    <body data-ng-app="Mapp" id="app" data-ng-controller="MainCtrl" data-custom-background="" data-off-canvas-nav="">
+    <title ng-bind="HpO.APP_DESCR"></title>
+        <!--[if lt IE 9]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div>
+            <div  data-ng-cloak="">
+                <section  data-ng-include=" 'AT_header.html' " id="header" class="top-header"></section>
+
+                <aside   ng-if="r.Up.viewmenu" id="nav-container">
+                    <rx-dcomp xtype="menu" compnum="0" xcode="" xt="FL_menu"/>
+                </aside>
+            </div>
+
+            <div class="view-container">
+                <section data-ng-view="" id="content" class="animate-fade-up" ng-style="r.Up.Tabstyle"></section>
+            </div>
+
+        </div>
+
+
+	<!-- jQuery v1.11.0 AngularJS v1.2.15  Underscore.js 1.5.2 -->
+     <script src="../TFLAT/scripts/vendor.js"></script>
+     <script src="../NGX/a/angular-locale_it-it.js"></script>
+	 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-cookies.js"></script>
+	 
+        <!--    www.jquery-steps.com  angular-ui-bootstrap  morris.js v0.5.0 slimscroll http://rocha.la http://omnipotent.net/jquery.sparkline/   http://benalman.com/projects/jquery-resize-plugin/ Angular Wizard https://github.com/mgonto/angular-wizard
+        -->
+    <script src="app.js"></script>
+    <script  src="../NGX/a/select2.min.js"></script>
+     <script  src="../TFLAT/scripts/ui.js"></script>
+	 
+
+
+    <script src="../TFLAT/scripts/app.js"></script>
+	<script src="MD.js"></script>
+    <!-- script NGX -->
+     <script src="../NGX/js/NGX.js"></script>
+     <script src="../NGX/js/service.js"></script>
+    <script  src="../NGX/a/select2_locale_it.js"></script>
+    <script  src="../NGX/a/select2.js"></script> 
+    <!-- script opzionali ... da gestire poi a parte nella configurazione dell'applicazione  -->
+    <!--script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script--> 
+    <script  src="../NGX/js/ut.js"></script>
+	<!-- Export PDF  -->
+    <script type="text/javascript" src="../NGX/a/jspdf.debug.js"></script>
+
+            </body>
+
+        </html>
